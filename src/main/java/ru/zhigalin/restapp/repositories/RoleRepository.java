@@ -7,7 +7,6 @@ import ru.zhigalin.restapp.model.Role;
 import javax.transaction.Transactional;
 
 @Repository
-@Transactional
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Role findByRole(String role);
 }

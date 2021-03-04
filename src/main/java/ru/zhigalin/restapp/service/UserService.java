@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.zhigalin.restapp.model.User;
 import ru.zhigalin.restapp.repositories.RoleRepository;
 import ru.zhigalin.restapp.repositories.UserRepository;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     final
     UserRepository userRepository;
@@ -28,19 +29,12 @@ public class UserService implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userRepository.findByLogin(login);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return user;
-    }
-
+    @Transactional
     public List<User> listUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByLogin(user.getLogin());
 
@@ -51,10 +45,12 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    @Transactional
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
     }
 
+    @Transactional
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
@@ -63,6 +59,7 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
+    @Transactional
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());

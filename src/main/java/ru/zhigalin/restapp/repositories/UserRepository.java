@@ -7,7 +7,6 @@ import ru.zhigalin.restapp.model.User;
 import javax.transaction.Transactional;
 
 @Repository
-@Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByLogin(String login);
 }
