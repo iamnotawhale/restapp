@@ -12,14 +12,14 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "login")
     private String login;
-    @Column
+    @Column(name = "password")
     private String password;
-    @Column
+    @Column(name = "email")
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -62,7 +62,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return login;
     }
 
     public void setPassword(String password) {
@@ -116,7 +116,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstname='" + login + '\'' +
+                ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", roles=" + roles +

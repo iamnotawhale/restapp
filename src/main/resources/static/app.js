@@ -110,7 +110,7 @@ async function editUser(modal, id) {
             <input class="form-control" id="editEmail" type="email" placeholder="email" name="email"  value="${user.email}"><br>
             <label class="font-weight-bold">Password</label>
             <input class="form-control" id="editPassword" type="text" placeholder="password" name="password"  value="${user.password}" required><br>
-            
+            <label class="font-weight-bold">Roles</label>
             <select  value="${user.roles}" multiple size="2" class="form-control"  id="editRoles" name="roles">
                      <option value="ROLE_USER" selected="${user.roles.includes('ROLE_USER')}"> USER </option>
                      <option value="ROLE_ADMIN" selected="${user.roles.includes('ROLE_ADMIN')}"> ADMIN </option>
@@ -175,7 +175,7 @@ async function deleteUser(modal, id) {
             <input class="form-control" id="deleteLogin" type="text" name="login" value="${user.login}" readonly><br>
             <label class="font-weight-bold">Email</label>
             <input class="form-control" id="deleteEmail" type="email" name="email" value="${user.email}" readonly><br>
-                        
+            <label class="font-weight-bold">Roles</label>            
             <select  value="${user.roles}" multiple size="2" class="form-control"  id="deleteRoles" name="roles" disabled>
                      <option value="ROLE_USER" selected="${user.roles.includes('ROLE_USER')}"> USER </option>
                      <option value="ROLE_ADMIN" selected="${user.roles.includes('ROLE_ADMIN')}"> ADMIN </option>

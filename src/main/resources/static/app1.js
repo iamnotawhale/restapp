@@ -11,7 +11,6 @@ const currentUserFetchService = {
 
 async function getCurrentUsers() {
     let table = $('#mainTableWithUsers');
-   // table.empty();
     let currentUser = await currentUserFetchService.getCurrentUser().then(rest => rest.json());
 
     $("#currentUserEmail").html(`${currentUser.email} with roles ${currentUser.roles.map(role=>role.role).join()}`)
