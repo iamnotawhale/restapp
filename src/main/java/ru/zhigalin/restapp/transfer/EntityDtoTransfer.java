@@ -1,6 +1,7 @@
 package ru.zhigalin.restapp.transfer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.zhigalin.restapp.dto.UserDto;
 import ru.zhigalin.restapp.model.Role;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 public class EntityDtoTransfer {
 
     private final RoleService roleService;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public EntityDtoTransfer(RoleService roleService) {
+    public EntityDtoTransfer(RoleService roleService, PasswordEncoder bCryptPasswordEncoder) {
         this.roleService = roleService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 
@@ -24,6 +27,11 @@ public class EntityDtoTransfer {
         User user = new User();
         user.setLogin(userDto.getLogin());
         user.setEmail(userDto.getEmail());
+        if (userDto.getPassword().startsWith("$2")) {
+            user.setPassword(userDto.getPassword());
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        }
         user.setRoles(userDto.getRoles() == null ? null : userDto.getRoles().stream()
                 .map(roleService::findByRoleName)
                 .collect(Collectors.toSet())

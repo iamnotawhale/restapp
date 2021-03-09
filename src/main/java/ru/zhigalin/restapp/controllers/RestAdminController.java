@@ -42,7 +42,6 @@ public class RestAdminController {
         return userList != null && !userList.isEmpty()
                 ? new ResponseEntity<>(userList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
 
     @GetMapping("/user")
@@ -74,9 +73,7 @@ public class RestAdminController {
     public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
         User user = entityDtoTransfer.fromDto(userDto);
         user.setId(id);
-        user.setPassword(userDto.getPassword());
         userService.updateUser(user);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
